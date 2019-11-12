@@ -2,9 +2,9 @@ const express = require('express');
 
 const app = express();
 
-app.get('/teste', (req, res) => {
+app.get('/project', (req, res) => {
 
-    return res.json({message:"lula é uma puta"})
+    return res.json({message:"novo projeto"})
 
 });
 
