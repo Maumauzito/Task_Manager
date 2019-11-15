@@ -47,8 +47,16 @@ app.post('/projects',(req, res)=>{
 
 app.post('/projects/:id/tasks',(req,res)=>{
 
-    const {id} = req.params;
-    const {task}
+    const { id } = req.params;
+    const { task } = req.body;
+
+    const project = projects.find(p => p.id == id);
+
+    console.log(project);
+
+    project.tasks.push(task);
+
+    return res.json(project);
 
 
 });
