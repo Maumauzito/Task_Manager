@@ -4,8 +4,8 @@ const app = express();
 
 app.use(express.json());
 
-const projects = [{id:"1",title:"Nome do projeto",tasks:["tarefa 1"]},
-                  {id:"2",title:"Nome do projeto 2",tasks:["tarefa 2"]}]
+
+const projects = [ ]
 
 
 // retorna lista com os projetos
@@ -15,25 +15,72 @@ app.get('/projects', (req, res) => {
 
 });
 
-// retorna o projeto atravez do id ou index
-// (neste caso será index pois não estou usando o banco de dados)
+
+
+//retorna o projeto pelo seu Id
 app.get('/projects/:id', (req, res) => {
-    const{id} = req.params; 
-    return res.json(projects[id-1]);
+
+    const { id } = req.params;
+    const project = projects.find(p => p.id == id);
+
+    return res.json(project);
 
 });
 
-//inclui um novo projeto
+//Cadastra um novo projeto
 app.post('/projects',(req, res)=>{
 
-    const body = req.body;
+    const { id,title } = req.body;
 
-    projects.push(body);
+    const project = {
+                    id,
+                    title,
+                    tasks:[]
+                    };
 
-    return res.json(projects);
+                 
+    projects.push(project);
+
+    return res.json(project);
 });
 
-app.post('/projects/:id/tasks')
+
+app.post('/projects/:id/tasks',(req,res)=>{
+
+    const {id} = req.params;
+    const {task}
+
+
+});
+
+
+//atualiza o tittulo do projeto
+app.put('/projects/:id',(req,res)=>{
+
+    const { id } = req.params;
+    const {title} = req.body;
+
+    const project = projects.find(p => p.id == id);
+
+    project.title = title;
+
+    return res.json(project);
+
+});
+
+
+
+// Exclui um projeto pelo seu Id
+app.delete('/projects/:id',(req,res)=>{
+
+    const { id } = req.params;
+    const projectIndex = projects.findIndex(p => p.id == id);
+
+    projects.splice(projectIndex,1);
+
+    return res.json(projects);
+
+});
 
 
 app.listen(3000);
